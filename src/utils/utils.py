@@ -49,10 +49,9 @@ def confusion_matrix(y_predict, y):
     true_negative = np.sum(y_predict_negative == y_negative)
     false_positive =  np.size(y_predict_negative) - true_negative
     
-    # accuracy = float(num_correct) / y_positive.shape[0]
-    print("------")
-    print("true_positive", true_positive, "false_negative", false_negative, "shape", y_predict_positive.shape[0])
-    print("true_negative", true_negative, "false_positive", false_positive, "shape", y_predict_negative.shape[0])
+    # print("------")
+    # print("true_positive", true_positive, "false_negative", false_negative, "shape", y_predict_positive.shape[0])
+    # print("true_negative", true_negative, "false_positive", false_positive, "shape", y_predict_negative.shape[0])
     return true_positive, false_positive, true_negative, false_negative
 
 def calc_accuracy(tp, tn, total_test_count):
