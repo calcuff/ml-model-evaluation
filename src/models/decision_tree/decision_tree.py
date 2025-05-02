@@ -1,12 +1,13 @@
 from models.decision_tree.node import Node, partition, partition_numerical
 from models.decision_tree.split_criteria import SplitMetric, InformationGain
+from models.decision_tree.stop_criteria import StopCriteria, MinimalGain
 from typing import List
 import operator
 import numpy as np
 import math
 
 class DecisionTree():
-    def __init__(self, probability_threshold=1.0, split_metric=InformationGain(), attribute_selection="random", stop_criteria=None):
+    def __init__(self, probability_threshold=1.0, split_metric=InformationGain(), attribute_selection="random", stop_criteria:StopCriteria=MinimalGain()):
         # Set probability threshold
         self.probability_threshold = probability_threshold
         # Validate correct type for split metric

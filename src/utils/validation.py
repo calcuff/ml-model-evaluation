@@ -1,5 +1,6 @@
 import numpy as np
 from models.knn.knn import KNN
+from models.decision_tree.decision_tree import DecisionTree
 from models.random_forest.random_forest import RandomForest
 from models.neural_net.neural_network import NeuralNetwork
 from utils.processing import train_val_from_folds
@@ -74,6 +75,42 @@ def random_forest_cross_validation(n_trees,  random_forests: dict[str,RandomFore
 
     return ntree_accuracies, ntree_f1s
 
+def decision_tree_cross_validation(X_train_folds, y_train_folds, stop_criteria):
+    stop_criteria_accuracies = {}
+    stop_criteria_f1s = {}
+    for sc in stop_criteria:
+        accuracies = []
+        f1s = []
+        for f, fold in enumerate(X_train_folds):
+            decision_tree = DecisionTree(stop_criteria=sc)
+
+            # Concatenate all folds except current validation set
+            x_train, x_val, y_train, y_val = train_val_from_folds(X_train_folds, y_train_folds, f)
+            
+            # Train and predict 
+            decision_tree.train(x_train, y_train)
+            # forest.train(X_train_folds[fold], y_train_folds[fold])
+            y_val_predict = decision_tree.classify(x_val)
+            
+            # Calculate metrics
+            tp, fp, tn, fn = confusion_matrix(y_val_predict, y_val)
+            val_acc = calc_accuracy(tp, tn, y_val_predict.shape[0])
+            precision = calc_precision(tp, fp)
+            recall = calc_recall(tp, fn)
+            f1 = calc_f1_score(precision, recall)
+            
+            # Store results for this fold
+            accuracies.append(val_acc)
+            f1s.append(f1)
+            
+        # Store all results for this ntree value
+        print("StopCriteria", str(sc), "Accuracy", f"{np.mean(accuracies):.2f}", "F1", f"{np.mean(f1s):.2f}")
+        stop_criteria_accuracies[str(sc)] = accuracies
+        stop_criteria_f1s[str(sc)] = f1s
+            
+
+    return stop_criteria_accuracies, stop_criteria_f1s
+    
 def neural_network_cross_validation(X_train_folds, y_train_folds, lrs, regs, input_dim, hidden_dims, output_dims):
     results = []
 

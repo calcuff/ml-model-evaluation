@@ -28,8 +28,8 @@ class Node():
         for i in range(X.shape[0]):
             prediction = self.classify_instance(X[i])
             predictions.append(prediction)
-        return predictions
-
+        return np.array(predictions)
+    
     def isEmpty(self):
         return self.X.shape[0] == 0
 
