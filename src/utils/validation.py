@@ -124,7 +124,7 @@ def neural_network_cross_validation(X_train_folds, y_train_folds, lrs, regs, inp
                     nn = NeuralNetwork(input_dim=input_dim, hidden_layer_dims=hd, output_dim=output_dims, reg=reg, lr=lr)
                     # Concatenate all folds except current validation set
                     x_train, x_val, y_train, y_val = train_val_from_folds(X_train_folds, y_train_folds, f)
-                    nn.train(x_train, y_train, 2000)
+                    nn.train(x_train, y_train, 1000, verbose=False)
                     y_pred = nn.predict(x_val)
                     # print("Unique predicted values:", np.unique(y_pred))
                     tp, fp, tn, fn = confusion_matrix(y_pred, y_val)
