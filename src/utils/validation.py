@@ -60,13 +60,13 @@ def random_forest_cross_validation(n_trees,  random_forests: dict[str,RandomFore
             precision = calc_precision(tp, fp)
             recall = calc_recall(tp, fn)
             f1 = calc_f1_score(precision, recall)
-            print("Ntree", ntree, "fold", fold, "Accuracy", f"{val_acc:.2f}", "F1", f"{f1:.2f}")
             
             # Store results for this fold
             accuracies.append(val_acc)
             f1s.append(f1)
             
         # Store all results for this ntree value
+        print("Ntree", ntree, "Accuracy", f"{np.mean(accuracies):.2f}", "F1", f"{np.mean(f1s):.2f}")
         ntree_accuracies[ntree] = accuracies
         ntree_f1s[ntree] = f1s
             

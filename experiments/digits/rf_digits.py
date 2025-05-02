@@ -6,8 +6,8 @@ project_root = os.path.abspath(os.path.join(os.getcwd(), "..", ".."))
 src_path = os.path.join(project_root, "src")
 sys.path.append(src_path)
 
-from utils.validation import cross_validate_knn
-from utils.plotting import plot_k_val_results
+from utils.validation import random_forest_cross_validation
+from utils.plotting import plot_k_val_results, results_to_csv
 from utils.data_loader import load_digits_dataset
 from utils.processing import normalize, shuffle_and_split, stratified_folds
 from models.decision_tree.split_criteria import InformationGain
@@ -33,3 +33,10 @@ stop_criteria=MinimalGain(minimal_gain=0.1, split_metric=split_metric, probabili
 for ntree in N_TREES:
     forest = RandomForest(ntree, stop_criteria=stop_criteria, node_split_metric=split_metric)
     random_forests[ntree] = forest
+
+ntree_accuracies, ntree_f1s  = random_forest_cross_validation(N_TREES, random_forests, X_train_folds, y_train_folds)
+
+results_dir = "results/"
+results_to_csv(N_TREES, ntree_accuracies, ntree_f1s, results_dir + "digits-rf-ntree-results.csv")
+plot_k_val_results(N_TREES, ntree_accuracies, "Accuracy", "Validation Accuracy across Ntree values", results_dir + " digits-rf-ntree-val-accuracies.png", "digits dataset")
+plot_k_val_results(N_TREES, ntree_f1s, "F1 Score", "Validation F1 scores across Ntree values", results_dir + "digits-rf-ntree-val-f1.png", "digits dataset")    

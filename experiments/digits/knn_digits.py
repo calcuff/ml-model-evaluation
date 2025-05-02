@@ -25,7 +25,8 @@ X_train_folds, y_train_folds = stratified_folds(X_train, y_train, NUM_FOLDS)
 
 k_values = [1, 3, 5, 7, 9, 11, 13, 21, 35, 51]
 k_accuracies, k_f1s = knn_cross_validation(X_train_folds, y_train_folds, k_values)
-    
-results_to_csv(k_values, k_accuracies, k_f1s, "digits-knn-results.csv")
-plot_k_val_results(k_values, k_accuracies, "Accuracy", "Validation Accuracy across K values", "results/digits-k-val-accuracies.png", "digits dataset")
-plot_k_val_results(k_values, k_f1s, "F1 Score", "Validation F1 scores across K values", "results/digits-k-val-f1.png", "digits dataset")    
+
+results_dir = "results/"
+results_to_csv(k_values, k_accuracies, k_f1s, results_dir + "digits-knn-results.csv")
+plot_k_val_results(k_values, k_accuracies, "Accuracy", "Validation Accuracy across K values", results_dir + "digits-knn-val-accuracies.png", "digits dataset")
+plot_k_val_results(k_values, k_f1s, "F1 Score", "Validation F1 scores across K values", results_dir + "digits-knn-val-f1.png", "digits dataset")    
