@@ -38,5 +38,5 @@ ntree_accuracies, ntree_f1s  = random_forest_cross_validation(N_TREES, random_fo
 
 results_dir = "results/"
 results_to_csv(N_TREES, ntree_accuracies, ntree_f1s, results_dir + "digits-rf-ntree-results.csv")
-plot_k_val_results(N_TREES, ntree_accuracies, "Accuracy", "Validation Accuracy across Ntree values", results_dir + " digits-rf-ntree-val-accuracies.png", "digits dataset")
-plot_k_val_results(N_TREES, ntree_f1s, "F1 Score", "Validation F1 scores across Ntree values", results_dir + "digits-rf-ntree-val-f1.png", "digits dataset")    
+plot_k_val_results(N_TREES, ntree_accuracies, "Accuracy", "Validation Accuracy across Ntree values", results_dir + "digits-rf-ntree-val-accuracies.png", "digits dataset", "Ntree")
+plot_k_val_results(N_TREES, ntree_f1s, "F1 Score", "Validation F1 scores across Ntree values", results_dir + "digits-rf-ntree-val-f1.png", "digits dataset", "Ntree")    
