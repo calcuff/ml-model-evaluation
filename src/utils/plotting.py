@@ -4,7 +4,7 @@ import pandas as pd
 import seaborn as sns
 
 # Plot mean accuracies for a set of k values
-def plot_k_val_results(k_choices, k_vals, metric:str, title:str, image_name:str, sub_title:str=None):
+def plot_k_val_results(k_choices, k_vals, metric:str, title:str, image_name:str, sub_title:str=None, x_label="k"):
     mean_vals = []
     std_devs = []
     for k in k_choices:
@@ -23,7 +23,7 @@ def plot_k_val_results(k_choices, k_vals, metric:str, title:str, image_name:str,
     if sub_title is not None:
         title += f'\n{sub_title}'
     plt.title(title)
-    plt.xlabel('k')
+    plt.xlabel(x_label)
     plt.ylabel(metric)
     # Save for later
     plt.savefig(image_name, bbox_inches='tight')

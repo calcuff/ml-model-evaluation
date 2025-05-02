@@ -5,10 +5,10 @@ from typing import List
 import numpy as np
 
 class RandomForest():
-    def __init__(self, ntree:int, stop_criteria:StopCriteria, node_split_metric:SplitMetric):
+    def __init__(self, ntree:int, stop_criteria:StopCriteria, node_split_metric:SplitMetric, attribute_selection="random"):
         self.trees:List[DecisionTree] = []
         for i in range(ntree):
-            self.trees.append(DecisionTree(split_metric=node_split_metric, stop_criteria=stop_criteria))
+            self.trees.append(DecisionTree(split_metric=node_split_metric, stop_criteria=stop_criteria, attribute_selection=attribute_selection))
 
             
     def train(self, X:np.ndarray, y:np.ndarray) -> None:

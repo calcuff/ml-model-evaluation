@@ -20,10 +20,13 @@ def calc_accuracy(tp, tn, total_test_count):
     return (tp+tn)/total_test_count
 
 def calc_precision(tp, fp):
-    return tp / (tp + fp)
+    denom = tp + fp
+    return tp / denom if denom > 0 else 0.0
 
 def calc_recall(tp, fn):
-    return tp / (tp + fn)
+    denom = tp + fn
+    return tp / denom if denom > 0 else 0.0
 
 def calc_f1_score(precision, recall, beta=1):
-    return (1 + beta**2)*(precision * recall)/(beta**2 * precision + recall)
+    denom = (beta**2 * precision + recall)
+    return (1 + beta**2) * (precision * recall) / denom if denom > 0 else 0.0
