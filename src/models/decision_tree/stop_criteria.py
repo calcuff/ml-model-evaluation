@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from models.decision_tree.node import Node
-from models.decision_tree.split_criteria import SplitMetric
+from models.decision_tree.split_criteria import InformationGain
 
 class StopCriteria(ABC):
     @abstractmethod
@@ -22,6 +22,9 @@ class MinimalSizeForSplit(StopCriteria):
         self.n = n
         self.p = probability_threshold
         
+    def __str__(self):
+        return f"MinimalSizeForSplit({self.n})"
+    
     def done(self, node:Node):
         X, _ = node.get_data()
         _, p = node.get_majority_probability()
@@ -38,10 +41,13 @@ class MinimalGain(StopCriteria):
     distribution is greater than or equal to
     the specified threshold.
     """
-    def __init__(self, minimal_gain: float, split_metric:SplitMetric, probability_threshold=1.0):
+    def __init__(self, minimal_gain=0.1, split_metric=InformationGain(), probability_threshold=1.0):
         self.minimal_gain = minimal_gain
         self.split_metric = split_metric
         self.p = probability_threshold
+    
+    def __str__(self):
+        return f"MinimalGain({self.minimal_gain})"
     
     def done(self, node: Node):
         # TODO: we will do this twice
@@ -65,6 +71,9 @@ class MaximalDepth(StopCriteria):
     def __init__(self, max_depth:int, probability_threshold=1.0):
         self.max_depth = max_depth
         self.p = probability_threshold
+        
+    def __str__(self):
+        return f"MaximalDepth({self.max_depth})"
         
     def done(self, node: Node):
         _, p = node.get_majority_probability()
