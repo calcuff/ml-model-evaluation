@@ -68,9 +68,7 @@ This project benchmarks classification models across four datasets, each offerin
 | **Goal**      | Identify rice species by grain shape        |
 | **Source**    | Provided in assignment zip file             |
 
-<p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Oryza_sativa0.jpg/320px-Oryza_sativa0.jpg" width="300" alt="Rice Grains Example"/>
-</p>
+> Medium-scale dataset used to evaluate classification performance on compact, well-behaved numerical features.
 
 ---
 
