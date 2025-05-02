@@ -20,7 +20,7 @@ def shuffle_and_split(X, y):
     # Shuffle data set
     X, y = sklearn.utils.shuffle(X,y)
     # Partition data into train + test
-    X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X,y, train_size=0.8, test_size=0.2, stratify=y)
+    X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X,y, train_size=0.2, test_size=0.8, stratify=y)
     return X_train, X_test, y_train, y_test
 
 # Split data into num stratified folds
