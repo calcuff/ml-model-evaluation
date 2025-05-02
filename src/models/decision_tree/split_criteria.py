@@ -1,4 +1,4 @@
-from decision_tree.node import Node, partition, partition_numerical
+from models.decision_tree.node import Node, partition, partition_numerical
 from abc import ABC, abstractmethod
 from typing import Tuple
 import numpy as np

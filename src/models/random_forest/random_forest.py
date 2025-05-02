@@ -1,6 +1,6 @@
-from decision_tree.decision_tree import DecisionTree
-from decision_tree.split_criteria import SplitMetric
-from decision_tree.stop_criteria import StopCriteria
+from models.decision_tree.decision_tree import DecisionTree
+from models.decision_tree.split_criteria import SplitMetric
+from models.decision_tree.stop_criteria import StopCriteria
 from typing import List
 import numpy as np
 

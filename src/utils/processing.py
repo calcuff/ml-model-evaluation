@@ -1,9 +1,19 @@
 import sklearn.utils, sklearn.model_selection
 from sklearn.preprocessing import OneHotEncoder
-import matplotlib.pyplot as plt
 from typing import Tuple
 import numpy as np
 
+# min-max normalization
+def normalize(X):
+    x_min = np.min(X, axis=0)
+    x_max = np.max(X, axis=0)
+    
+    r = x_max - x_min
+    # Avoid division by zero
+    r[r == 0] = 1
+    
+    X_norm = (X - x_min)/r
+    return X_norm
 
 # Shuffle data and split into training + test
 def shuffle_and_split(X, y):
@@ -34,39 +44,6 @@ def stratified_folds(X:np.ndarray, y:np.ndarray, num_folds:int)-> Tuple[list, li
     y_folds.append(y)
     return X_folds, y_folds
 
-
-def confusion_matrix(y_predict, y):
-    positive_mask = y == 1
-    y_positive = y[positive_mask]
-    y_predict_positive = y_predict[positive_mask]
-    
-    y_negative = y[~positive_mask]
-    y_predict_negative = y_predict[~positive_mask]
-    
-    true_positive = np.sum(y_predict_positive == y_positive)
-    false_negative = np.size(y_predict_positive) - true_positive
-    
-    true_negative = np.sum(y_predict_negative == y_negative)
-    false_positive =  np.size(y_predict_negative) - true_negative
-    
-    # accuracy = float(num_correct) / y_positive.shape[0]
-    print("------")
-    print("true_positive", true_positive, "false_negative", false_negative, "shape", y_predict_positive.shape[0])
-    print("true_negative", true_negative, "false_positive", false_positive, "shape", y_predict_negative.shape[0])
-    return true_positive, false_positive, true_negative, false_negative
-
-def calc_accuracy(tp, tn, total_test_count):
-    return (tp+tn)/total_test_count
-
-def calc_precision(tp, fp):
-    return tp / (tp + fp)
-
-def calc_recall(tp, fn):
-    return tp / (tp + fn)
-
-def calc_f1_score(precision, recall, beta=1):
-    return (1 + beta**2)*(precision * recall)/(beta**2 * precision + recall)
-
 def one_hot_encode(data: np.ndarray, columns: list):
     ohe = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
     
@@ -86,3 +63,11 @@ def one_hot_encode(data: np.ndarray, columns: list):
         start = end
 
     return encoded_data
+
+
+def train_val_from_folds(X_train_folds, y_train_folds, f):
+    x_train = np.concatenate([X_train_folds[j] for j in range(len(X_train_folds)) if j != f])
+    y_train = np.concatenate([y_train_folds[j] for j in range(len(y_train_folds)) if j != f])
+    x_val = X_train_folds[f]
+    y_val = y_train_folds[f]
+    return x_train, x_val, y_train, y_val
