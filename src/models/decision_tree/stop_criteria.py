@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from decision_tree.node import Node
-from decision_tree.split_criteria import SplitMetric
+from models.decision_tree.node import Node
+from models.decision_tree.split_criteria import SplitMetric
 
 class StopCriteria(ABC):
     @abstractmethod

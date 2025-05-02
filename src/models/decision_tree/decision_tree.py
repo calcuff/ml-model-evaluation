@@ -1,7 +1,7 @@
 import pandas as pd
-from decision_tree.node import Node, partition, partition_numerical
-from decision_tree.split_criteria import SplitMetric, InformationGain
-from decision_tree.stop_criteria import StopCriteria, MinimalGain
+from models.decision_tree.node import Node, partition, partition_numerical
+from models.decision_tree.split_criteria import SplitMetric, InformationGain
+from models.decision_tree.stop_criteria import StopCriteria, MinimalGain
 from typing import List
 import operator
 import numpy as np

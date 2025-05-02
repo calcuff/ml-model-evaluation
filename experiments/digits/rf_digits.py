@@ -6,11 +6,13 @@ project_root = os.path.abspath(os.path.join(os.getcwd(), "..", ".."))
 src_path = os.path.join(project_root, "src")
 sys.path.append(src_path)
 
-from utils.validation import knn_cross_validation
-from utils.plotting import plot_k_val_results, results_to_csv
+from utils.validation import cross_validate_knn
+from utils.plotting import plot_k_val_results
 from utils.data_loader import load_digits_dataset
 from utils.processing import normalize, shuffle_and_split, stratified_folds
-import numpy as np
+from models.decision_tree.split_criteria import InformationGain
+from models.decision_tree.stop_criteria import MinimalGain
+from models.random_forest.random_forest import RandomForest
 
 # Load digits dataset
 digits_dataset_X, digits_dataset_y = load_digits_dataset()
@@ -23,9 +25,11 @@ X_train, X_test, y_train, y_test = shuffle_and_split(digits_dataset_X, digits_da
 NUM_FOLDS = 10
 X_train_folds, y_train_folds = stratified_folds(X_train, y_train, NUM_FOLDS)
 
-k_values = [1, 3, 5, 7, 9, 11, 13, 21, 35, 51]
-k_accuracies, k_f1s = knn_cross_validation(X_train_folds, y_train_folds, k_values)
-    
-results_to_csv(k_values, k_accuracies, k_f1s, "digits-knn-results.csv")
-plot_k_val_results(k_values, k_accuracies, "Accuracy", "Validation Accuracy across K values", "results/digits-k-val-accuracies.png", "digits dataset")
-plot_k_val_results(k_values, k_f1s, "F1 Score", "Validation F1 scores across K values", "results/digits-k-val-f1.png", "digits dataset")    
+# Number of decision trees in random forest to cross validate
+N_TREES = [1,5,10,20,30,40,50]
+random_forests = {}
+split_metric=InformationGain()
+stop_criteria=MinimalGain(minimal_gain=0.1, split_metric=split_metric, probability_threshold=1.0)
+for ntree in N_TREES:
+    forest = RandomForest(ntree, stop_criteria=stop_criteria, node_split_metric=split_metric)
+    random_forests[ntree] = forest

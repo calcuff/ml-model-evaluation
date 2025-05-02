@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 # Plot mean accuracies for a set of k values
 def plot_k_val_results(k_choices, k_vals, metric:str, title:str, image_name:str, sub_title:str=None):
@@ -27,3 +28,17 @@ def plot_k_val_results(k_choices, k_vals, metric:str, title:str, image_name:str,
     plt.savefig(image_name, bbox_inches='tight')
     # Display
     plt.show()
+    
+
+def results_to_csv(k_values, k_accuracies, k_f1s, filename):
+    results = []
+    for k in k_values:
+        acc_mean = np.mean(k_accuracies[k])
+        f1_mean = np.mean(k_f1s[k])
+        results.append({"k": k, "mean_accuracy": acc_mean, "mean_f1": f1_mean})
+
+    # Convert to DataFrame
+    results_df = pd.DataFrame(results)
+
+    # Save to CSV
+    results_df.to_csv(filename, index=False)

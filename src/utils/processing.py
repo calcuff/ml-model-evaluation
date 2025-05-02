@@ -63,3 +63,11 @@ def one_hot_encode(data: np.ndarray, columns: list):
         start = end
 
     return encoded_data
+
+
+def train_val_from_folds(X_train_folds, y_train_folds, f):
+    x_train = np.concatenate([X_train_folds[j] for j in range(len(X_train_folds)) if j != f])
+    y_train = np.concatenate([y_train_folds[j] for j in range(len(y_train_folds)) if j != f])
+    x_val = X_train_folds[f]
+    y_val = y_train_folds[f]
+    return x_train, x_val, y_train, y_val
