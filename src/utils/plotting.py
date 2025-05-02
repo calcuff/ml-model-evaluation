@@ -119,3 +119,16 @@ def plot_nn_results(results_file, dataset:str, image_name):
 
     plt.savefig(image_name)
     plt.show()
+    
+def plot_nn_loss_curve(x_seen, train_losses, test_losses, image_name):
+    plt.plot(x_seen, train_losses, label='Train Loss', marker='o')
+    plt.plot(x_seen, test_losses, label='Test Loss', marker='s')
+    plt.xlabel("Number of Training Samples Seen")
+    plt.ylabel("Loss (J)")
+    plt.title("Learning Curve: Train and Test Loss over Epochs")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(image_name)
+    plt.show()
+
