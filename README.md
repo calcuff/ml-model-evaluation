@@ -13,6 +13,7 @@ We benchmark the following algorithms:
 
 Each model is evaluated across one or more datasets with characteristics such as class imbalance, high dimensionality, and noisy features.
 
+---
 ## Objectives
 
 - Assess model performance using accuracy, precision, recall, F1-score, and confusion matrices.
@@ -20,8 +21,52 @@ Each model is evaluated across one or more datasets with characteristics such as
 - Highlight trade-offs in bias-variance and model interpretability.
 - Provide reproducible code and structured analysis for future comparison studies.
 
+---
+## Running
 
+### Installation
+Install required dependencies:
 
+```bash
+pip install -r requirements.txt
+```
+
+### Project Structure
+
+- Model implementations are located in [src/](src/)
+
+- Experiment scripts are located in [experiments/](experiments/), organized by dataset
+
+### Running an Experiment
+
+Each Python script under experiments/dataset/ will:
+
+1. Load the appropriate dataset
+    - Normalize numerical features
+    - One-hot encode categorical features
+    - Split into train/validation sets using stratified 10-fold cross-validation
+
+2. Perform a hyperparameter search
+    - Search criteria depend on the model (e.g., k in KNN, depth in Decision Trees, etc.)
+
+3. Train and evaluate the model
+    - For each hyperparameter configuration
+    - Evaluate performance on the validation set using accuracy and F1-score
+
+4. Store results
+    - Results are saved as .csv files, ex: [/experiments/credit/results/credit-nn-results.csv](/experiments/credit/results/credit-nn-results.csv)
+
+5. Generate plots
+    - Performance graphs are saved as .png files, ex: [/experiments/credit/results/credit-nn-results.png](/experiments/credit/results/credit-nn-results.png)
+
+#### Note: python scripts must be run from with the experiments/dataset directory
+
+``` bash
+cd experiments/digits
+python3 knn_digits.py
+```
+
+---
 ### 📚 Datasets
 
 This project benchmarks classification models across four datasets, each offering distinct challenges in terms of data structure, dimensionality, and learning complexity.
