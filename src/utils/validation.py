@@ -144,4 +144,31 @@ def neural_network_cross_validation(X_train_folds, y_train_folds, lrs, regs, inp
                 
     return results
                 
-    
+
+def test_decision_tree(X_train, X_test, y_train, y_test, decision_tree:DecisionTree, iter):
+    train_accuracies = []
+    test_accuracies = []
+    for _ in range(iter):
+        # Build decision tree on training data
+        dt = decision_tree
+        dt.train(X_train, y_train)
+
+        # Classify training set
+        y_train_predict = dt.classify(X_train)
+        tp, fp, tn, fn = confusion_matrix(y_train_predict, y_train)
+        train_acc = calc_accuracy(tp, tn, y_train_predict.shape[0])
+        precision = calc_precision(tp, fp)
+        recall = calc_recall(tp, fn)
+        f1 = calc_f1_score(precision, recall)
+        train_accuracies.append(train_acc)
+        
+        # Classify test set
+        y_test_predict = dt.classify(X_test)
+        tp, fp, tn, fn = confusion_matrix(y_test_predict, y_test)
+        test_acc = calc_accuracy(tp, tn, y_test_predict.shape[0])
+        precision = calc_precision(tp, fp)
+        recall = calc_recall(tp, fn)
+        f1 = calc_f1_score(precision, recall)
+        test_accuracies.append(test_acc)
+
+    return train_accuracies, test_accuracies

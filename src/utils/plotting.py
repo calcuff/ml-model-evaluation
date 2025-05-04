@@ -131,4 +131,30 @@ def plot_nn_loss_curve(x_seen, train_losses, test_losses, image_name):
     plt.tight_layout()
     plt.savefig(image_name)
     plt.show()
+    
+# Plot historgram of accuracies
+def plot_dt_accuracy_histogram(accuracies, type:str, image_name:str, sub_title:str=None):
+    # Mean and std deviation
+    mean = np.mean(accuracies)
+    std = np.std(accuracies)
+    # Histogram
+    plt.hist(accuracies, bins=30, color='skyblue', edgecolor='black')
+    # Dashed lines and labels for mean + std deviation
+    plt.axvline(mean, color='red', linestyle='dashed', linewidth=1, label=f'Mean: {mean:.2f}')
+    plt.axvline(mean + std, color='green', linestyle='dashed', linewidth=1, label=f'Std Dev: {std:.4f}')
+    plt.axvline(mean - std, color='green', linestyle='dashed', linewidth=1)
+    plt.legend()
+    
+    # Formatting
+    title = 'Best Decision Tree ' + type + ' Accuracy Histogram'
+    if sub_title is not None:
+        title += f'\n{sub_title}'
+
+    plt.title(title)
+    plt.xlabel('Accuracy')
+    plt.ylabel('Accuracy Frequency on ' + type + ' Data')
+    # Save for later
+    plt.savefig(image_name, bbox_inches='tight')
+    # Display
+    plt.show()
 
